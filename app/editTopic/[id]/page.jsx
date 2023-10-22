@@ -1,5 +1,3 @@
-"use client";
-
 import { getTopicById } from "@/app/action/p";
 import EditTopicForm from "@/components/EditTopicForm";
 
