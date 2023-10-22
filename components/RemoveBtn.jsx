@@ -2,6 +2,7 @@
 
 import { HiOutlineTrash } from "react-icons/hi";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function RemoveBtn({ id }) {
   const router = useRouter();
@@ -9,11 +10,13 @@ export default function RemoveBtn({ id }) {
     const confirmed = confirm("Are you sure?");
 
     if (confirmed) {
-      const res = await fetch(`http://localhost:3000/api/topics?id=${id}`, {
-        method: "DELETE",
-      });
+      // const res = await fetch(`http://localhost:3000/api/topics?id=${id}`, {
+      //   method: "DELETE",
+      // });
 
-      if (res.ok) {
+      const res = await axios.delete(`/api/topics?id=${id}`);
+
+      if (res.data) {
         router.refresh();
       }
     }

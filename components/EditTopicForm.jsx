@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function EditTopicForm({ id, title, description }) {
   const [newTitle, setNewTitle] = useState(title);
@@ -13,15 +14,20 @@ export default function EditTopicForm({ id, title, description }) {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ newTitle, newDescription }),
-      });
+      // const res = await fetch(`http://localhost:3000/api/topics/${id}`, {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-type": "application/json",
+      //   },
+      //   body: JSON.stringify({ newTitle, newDescription }),
+      // });
 
-      if (!res.ok) {
+      const data = { newTitle: newTitle, newDescription: newDescription };
+
+      const res = await axios.put(`/api/topics/${id}`, data);
+      console.log("res in eidt...", res);
+
+      if (!res.data) {
         throw new Error("Failed to update topic");
       }
 

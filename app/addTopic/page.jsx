@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export default function AddTopic() {
   const [title, setTitle] = useState("");
@@ -17,16 +18,20 @@ export default function AddTopic() {
       return;
     }
 
-    try {
-      const res = await fetch("http://localhost:3000/api/topics", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ title, description }),
-      });
+    const data = { title: title, description: description };
 
-      if (res.ok) {
+    try {
+      // const res = await fetch("http://localhost:3000/api/topics", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-type": "application/json",
+      //   },
+      //   body: JSON.stringify({ title, description }),
+      // });
+      const res = await axios.post("/api/topics", data);
+      console.log("res...", res);
+
+      if (res.data) {
         router.push("/");
         router.refresh();
       } else {
